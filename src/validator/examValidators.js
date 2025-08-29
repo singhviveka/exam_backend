@@ -4,6 +4,7 @@ export const examSchema = z.object({
   name: z.string().min(1),
   totalQuestions: z.number().int().positive(),
   questionsInExam: z.number().int().positive(),
+  status : z.string(),
   passingPercentage: z.number().int().min(0).max(100),
   startDate: z.string().datetime()
 });
@@ -17,6 +18,12 @@ export function validateExamPayload(body) {
     throw err;
   }
   const payload = parsed.data;
+  if(payload.status != "DRAFT" && payload.status != "PUBLISH"){
+    const err = new Error('status must be "DRAFT" or "PUBLISH"');
+    err.status = 400;
+    throw err;
+  }
+
   // Future date validation
   const start = new Date(payload.startDate);
   if (isNaN(start.getTime()) || start <= new Date()) {

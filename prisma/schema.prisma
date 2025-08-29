@@ -18,6 +18,7 @@ model Exam {
   totalQuestions    Int
   questionsInExam   Int
   passingPercentage Int
+  status            String @default("DRAFT")
   startDate         DateTime
   createdAt         DateTime  @default(now())
   updatedAt         DateTime  @updatedAt

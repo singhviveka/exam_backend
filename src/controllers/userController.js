@@ -19,7 +19,8 @@ export async function getExamForUser(req, res, next) {
       include: { questions: { include: { options: true } } }
     });
     if (!exam) return res.status(404).json({ error: 'Exam not found' });
-
+    if(exam.status != "PUBLISH") return res.status(404).json({ error: 'Exam is not Publish' });
+    if(exam.questionsInExam.length <= 0 ) return res.status(404).json({ error: 'Exam does not have any questions.' });
     // Deterministic shuffle by user+exam
     const seed = `${email}|${exam.id}`;
     const shuffledQuestions = seededShuffle(exam.questions, seed)
