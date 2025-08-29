@@ -4,5 +4,6 @@
 * Clone to Repo.
 * Run npm install
 * create .env file
+* Run migration script and migrate in prisma
 * Run npm run dev
 
